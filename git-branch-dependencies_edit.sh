@@ -1,6 +1,11 @@
 #!/bin/bash
 
-git_root_dir_path=$(git rev-parse --show-toplevel)
+git_root_dir_path=$(git rev-parse --show-toplevel 2>/dev/null)
+
+if [ $? -ne 0 ]; then
+  echo "Not a git repository." >&2
+  exit 1
+fi
 
 GIT_BRANCH_DEPENDENCIES_FILE="git-branch-dependencies.yaml"
 GIT_BRANCH_DEPENDENCIES_FILE_PATH="$git_root_dir_path/.git/$GIT_BRANCH_DEPENDENCIES_FILE"
